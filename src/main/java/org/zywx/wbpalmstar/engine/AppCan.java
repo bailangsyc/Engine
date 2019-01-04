@@ -234,6 +234,12 @@ public class AppCan {
         start(activity,tempWidgetData,bundle);
     }
 
+    /**
+     * 反射调用插件入口类中的onApplicationCreate方法
+     * 因为该方法本质上是在Application的onCreat方法中调用，所以就相当于是插件拦截了
+     * Application的onCreat方法
+     * @param method
+     */
     private void reflectionPluginMethod(String method) {
         ThirdPluginMgr tpm = getThirdPlugins();
         Map<String, ThirdPluginObject> thirdPlugins = tpm.getPlugins();

@@ -81,7 +81,7 @@ public class ThirdPluginMgr {
 
     private StringBuffer script;
     private Map<String, ThirdPluginObject> mThirdClass;
-	private LinkedList<String> javaNames;
+	private LinkedList<String> javaNames; //维护了一个插件的列表，元素为插件的包名
     private int PluginCount = 0;
 	private String libsParentDir = null;
 
@@ -331,6 +331,7 @@ public class ThirdPluginMgr {
 
 	/**
 	 * 根据plugin.xml中的配置，加载插件
+	 *
 	 * 
 	 * @param plugins
 	 * @param listenerQueue
@@ -355,6 +356,8 @@ public class ThirdPluginMgr {
                 if (eventType == XmlResourceParser.START_TAG) {
                     String strNode = plugins.getName();
                     if (strNode.equals(pluginNode)) {
+						//jsName（插件的名字）: uexDataBaseMgr
+						//javaName(入口类的包名): org.zywx.wbpalmstar.plugin.uexdatabasemgr.EUExDataBaseMgr
                         jsName = plugins.getAttributeValue(null, uexNameAttr);
                         javaName = plugins.getAttributeValue(null,
                                 classNameAttr);
@@ -367,6 +370,7 @@ public class ThirdPluginMgr {
                             } else {
 
                                 Constructor<?> object = null;
+                                //object:反射获取插件中的含有参数 (context,EBrowserView）的构造函数
 								object = loadUexDexClass(classLoader, javaName);
                                 if (null == object) {
                                     object = loadUexClass(javaName);
@@ -390,7 +394,7 @@ public class ThirdPluginMgr {
                         }
 
 
-                    } else if (strNode.equals(methodNode)) {
+                    } else if (strNode.equals(methodNode)) {//解析plugin.xml中的插件的方法
                         String methodValue = plugins.getAttributeValue(null,
                                 nameAttr);
 						if (null != scriptObj
@@ -410,7 +414,9 @@ public class ThirdPluginMgr {
 					if (strNode.equals(pluginNode)) {
 						if (null != scriptObj
 								&& !isDuplicatedPlugin(jsName, javaName)) {
+							//将该插件对象中的uexScript属性添加结尾的标识 "};"
                             scriptObj.oneObjectOver(script);
+                            //解析完成后将解析的结果ThirdPluginObject 放入到map mThirdClass中 key为插件的包名，value为ThirdPluginObject
                             mThirdClass.put(jsName, scriptObj);
 							javaNames.add(javaName);
 							BDebug.i("DL", jsName + " plugin loaded.");

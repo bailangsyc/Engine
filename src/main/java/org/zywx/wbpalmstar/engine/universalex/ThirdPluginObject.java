@@ -40,9 +40,10 @@ public class ThirdPluginObject {
     public static final String js_dispatch_mid = "\',\'";
     public static final String js_dispatch_end = "\',";
 
-    public String uexName;
+    public String uexName;// jsName（插件的名字）：例如 uexDataBaseMgr
     public StringBuffer uexScript;
-    public String jclass;
+    public String jclass; //(入口类的包名): 例如 org.zywx.wbpalmstar.plugin.uexdatabasemgr.EUExDataBaseMgr
+    // 入口类中的两个的构造：初始化插件的时候反射获取了入口类中含有两个参数(context,EBrowserView）的构造
     public Constructor<?> jobject;
     public boolean isGlobal = false;
     public EUExBase pluginObj = null;
