@@ -1,0 +1,31 @@
+#Header {
+	color:rgba(255,255,255,1);
+}
+#ScrollContent {
+	padding:2.8em 0em 0em 0em;
+}
+.btncss{
+    width:70%;
+    margin:.75em 15%;
+}
+.fun-unit{
+    margin: 0.2em 0em;
+    font-size: 0.8em;
+    width:98%;
+}
+.text-desc{
+    padding: 0.2em 0.5em;
+    color: #101010;
+    width:98%;
+}
+.button-go{
+    color: #000000;
+    width:65%;
+    margin:0.5em 0.2em;
+    min-height: 2.2em;
+    font-size: 1em;
+    text-align: center;
+}
+.result_display{
+    color: #ff0000; 
+}
