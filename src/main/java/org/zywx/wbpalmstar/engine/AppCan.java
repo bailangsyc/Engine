@@ -76,42 +76,41 @@ public class AppCan {
      */
     public boolean initSync(Context context){
         mContext=context.getApplicationContext();
+        //如果context不是全局上下就返回false
         if (!(mContext instanceof Application)){
             return false;
         }
+        //创建一个EngineEventListener添加到监听Engine推送事件的队列中
         mListenerQueue = new ELinkedList<EngineEventListener>();
         PushEngineEventListener pushlistener = new PushEngineEventListener();
         mListenerQueue.add(pushlistener);
-        BDebug.init();
-        BConstant.app = (Application) mContext;
-        DiskCache.initDiskCache(mContext);
-        ACEDes.setContext(mContext);
-        EUExUtil.init(mContext);
-        WebViewSdkCompat.initInApplication(mContext);
-        mCrashReport = ECrashHandler.getInstance(mContext);
-        initPlugin();
-
-//        Handler mainHandler=new Handler(Looper.getMainLooper());
-//        mainHandler.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                reflectionPluginMethod("onApplicationCreate");//主线程调用onApplicationCreate,某些三方插件需要在主线程初始化
-//            }
-//        });
-
+        BDebug.init(); //log工具类
+        BConstant.app = (Application) mContext; //将应用的上下文赋值给BConstant（专门用来存放常量）的app属性，方便使用
+        DiskCache.initDiskCache(mContext);//???
+        ACEDes.setContext(mContext); // ACEDes 主要负责加密
+        EUExUtil.init(mContext);//EUExUtil 初始化： 主要用来反射获取布局文件，以及布局文件中的一些属性
+        WebViewSdkCompat.initInApplication(mContext);//???
+        mCrashReport = ECrashHandler.getInstance(mContext); //??? 捕获崩溃日志
+        initPlugin();// 第三方插件的初始化
         //清除上次运行的Session 数据
         SpManager.getInstance().clearSession();
+
+        //获取assets/widget 中的widget，assets的widget中没有config.xml则获取默认的widget
+        //mWidgetData ！= null并且它的m_indexUrl不为null则说明Engine初始化完成
         WDataManager wDataManager = new WDataManager(mContext);
         if (wDataManager.isHasAssetsWidget()) {
             mWidgetData = wDataManager.getWidgetData();
         } else {
-            mWidgetData = wDataManager.getDefaultWidgetData();
+            mWidgetData = wDataManager.getDefaultWidgetData();//此处不甚理解
         }
         boolean success=isInitSuccess();
+
+        //BUtility？？？
         if (success) {
             BUtility.initWidgetOneFile(mContext, mWidgetData.m_appId);
         }
 
+        //拦截application声明周期中的onApplicationCreate()
         reflectionPluginMethod("onApplicationCreate");
 
         return success;

@@ -773,6 +773,11 @@ public class WDataManager {
     // return sbf.toString();
     // }
 
+
+    /**
+     * 通过判断assets/widget/ 中是否有config.xml文件来判断是否存在 rootWidget
+     * @return
+     */
     public boolean isHasAssetsWidget() {
         try {
             InputStream in = m_context.getAssets().open(m_rootWidgetConfigPath);
@@ -787,6 +792,10 @@ public class WDataManager {
         return false;
     }
 
+    /**
+     * 获取默认的widget
+     * @return
+     */
     public WWidgetData getDefaultWidgetData() {
         WWidgetData widgetData = new WWidgetData();
         widgetData.m_appId = "default";
