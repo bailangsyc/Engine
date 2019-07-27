@@ -241,6 +241,7 @@ public class BUtility {
     }
 
     /**
+     * data/data/packagename/files
      * @return 沙箱目录路径
      */
     public static String getSBoxRootPath(Context context) {
@@ -270,13 +271,24 @@ public class BUtility {
         return widgetOneRootPath;
     }
 
-    // 初始化widget的文件夹
+
+    /**
+     * 初始化widget的文件夹
+     *
+     * 1. 如果是沙箱环境设置沙箱路径，
+     * 2. 根据appid 创建该appid对应的文件夹（video、photo、audio等）
+     *
+     * @param context
+     * @param appId
+     */
     public static void initWidgetOneFile(Context context, String appId) {
         String root = null;
         appId += "/";
         if (!WDataManager.isWidgetOneSBox && sdCardIsWork()) {
+            //sd卡根目录
             root = getSdCardRootPath();
         } else {
+            //data/data/packagename/files
             root = getSBoxRootPath(context);
         }
         widgetOneRootPath = root + F_BASE_WGT_PATH;

@@ -273,7 +273,7 @@ public final class EBrowserActivity extends BaseActivity {
         }
         ConfigXmlUtil.setStatusBarColor(this,WWidgetData.sStatusBarColor);
         mLoadingRemoved = true;
-        getWindow().setBackgroundDrawable(new ColorDrawable(0xFFFFFFFF));
+        getWindow().setBackgroundDrawable(new ColorDrawable(0xFFFFFFFF));//纯白色
         sendFinishLoadingBroadcast(delayTime);
     }
 

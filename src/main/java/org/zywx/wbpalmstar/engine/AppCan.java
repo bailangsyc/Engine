@@ -184,6 +184,7 @@ public class AppCan {
             BUtility.initWidgetOneFile(mContext, data.m_appId);
         }
         if (data.m_obfuscation == 1) {
+            //将file协议转换为content协议
             String packg = mContext.getPackageName();
             String contentPrefix = "content://" + packg + ".sp/android_asset/";
             data.m_indexUrl = contentPrefix + data.m_indexUrl.substring("file:///".length());

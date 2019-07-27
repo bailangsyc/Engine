@@ -632,6 +632,7 @@ public class WDataManager {
 
         long widgetDBId = -1;
 
+        // ContentValues ？？？？ 具体怎么用
         ContentValues cv = new ContentValues();
         cv.put(WDBAdapter.F_COLUMN_WIDGETONEID, widgetData.m_widgetOneId);
 
@@ -819,7 +820,7 @@ public class WDataManager {
         isUpdateWidget = checkAppStatus(m_context, assetsData.m_appId);
         isCopyAssetsFinish = m_preferences.getBoolean(m_copyAssetsFinish, false);
         try {
-            if (isUpdateWidget) {
+            if (isUpdateWidget) {// 开启一个线程复制asssets目录中的rootwidget到 /data/data/files/widget/ 中
                 PackageInfo pinfo = pm.getPackageInfo(
                         m_context.getPackageName(),
                         PackageManager.GET_CONFIGURATIONS);
@@ -888,6 +889,9 @@ public class WDataManager {
 //					CopyAssets("widget", m_sboxPath + "widget/");
 //				}
 //			}
+
+            // 上边缩有的操作就是将assets中的widget复制到 /data/data/packageName/widget 中,
+            //所以最终的rootWidget路径应该是  /data/data/packageName/widget
             m_rootWidgetConfigPath = m_sboxPath + m_rootWidgetConfigPath;
         }
 
@@ -915,6 +919,7 @@ public class WDataManager {
                                 WDBAdapter.F_WIDGET_TABLE_NAME);
                         db.close();
                         widgetData = xmlWidgetData;
+                        // 这个又是什么意思呢 ？？？？
                         widgetDBId = addWidgetIntoDB(xmlWidgetData,
                                 WDBAdapter.F_WIDGET_TABLE_NAME);
 
@@ -1072,6 +1077,11 @@ public class WDataManager {
         thread.start();
     }
 
+    /**
+     * 将assets目录中的widget复制到指定目录， 这个方法应该写成一个工具类
+     * @param assetDir assets中的目录名
+     * @param dir
+     */
     private void CopyAssets(String assetDir, String dir) {
         String[] files;
         try {

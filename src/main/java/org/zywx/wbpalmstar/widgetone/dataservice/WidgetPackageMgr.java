@@ -153,7 +153,8 @@ public class WidgetPackageMgr {
     }
 
     /**
-     * 判断是否有增量更新包，如果有，继续判断版本号是否大于当前APK的版本号。 主应用补丁包结构：旧：网页代码+config.xml打包。
+     * 判断是否有增量更新包，如果有，继续判断版本号是否大于当前APK的版本号。
+     * 主应用补丁包结构：旧：网页代码+config.xml打包。
      * 动态加载结构：widget/appId/网页代码+config.xml。
      * 
      * @param context
